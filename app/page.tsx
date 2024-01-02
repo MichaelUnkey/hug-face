@@ -1,9 +1,29 @@
 "use client";
 import { UserButton } from "@clerk/nextjs";
 import { useChat } from "ai/react";
+import { metadata } from "./layout";
+import { useEffect, useState } from "react";
 
-export default  function Chat() {  
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+export default function Chat() {
+  const [keyData, setKeyData] = useState("");
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
+    headers: { Authorization: `Bearer ${keyData}` },
+  });
+  useEffect(() => {
+    const fetchKeyData = async () => {
+      if (!localStorage.getItem("keyData")) {
+        const response = await fetch("/api/unkey");
+        const data = await response.json();
+        localStorage.setItem("keyData", data.key);
+        setKeyData(data.key);
+      }
+
+      setKeyData(localStorage.getItem("keyData")!);
+      return;
+    };
+    fetchKeyData();
+  }, []);
+
   return (
     <div>
       <UserButton afterSignOutUrl="/" />
