@@ -8,6 +8,9 @@ dependencies:
   '@huggingface/inference':
     specifier: ^2.5.1
     version: 2.6.4
+  '@unkey/nextjs':
+    specifier: ^0.13.5
+    version: 0.13.5
   ai:
     specifier: 2.2.30
     version: 2.2.30(react@18.2.0)(solid-js@1.8.7)(svelte@4.2.8)(vue@3.4.3)
@@ -416,6 +419,16 @@ packages:
       '@typescript-eslint/types': 5.62.0
       eslint-visitor-keys: 3.4.3
     dev: true
+
+  /@unkey/api@0.13.1:
+    resolution: {integrity: sha512-UycJqArrmCf3NdfSQrkmpomng0vam5NnsyJ1cTOZRSbx3t/DnCLkEHQm3V3m+FHasMPdOU3t2i29fOSb3t/93w==}
+    dev: false
+
+  /@unkey/nextjs@0.13.5:
+    resolution: {integrity: sha512-7e7czCb4bXUIra477WowRCkUO1Go76tWaQ6DxWYWAfzIquv0euWHzIr+wlFtZ5OzjJDM+wirDpNvEpFIfcahVA==}
+    dependencies:
+      '@unkey/api': 0.13.1
+    dev: false
 
   /@vue/compiler-core@3.4.3:
     resolution: {integrity: sha512-u8jzgFg0EDtSrb/hG53Wwh1bAOQFtc1ZCegBpA/glyvTlgHl+tq13o1zvRfLbegYUw/E4mSTGOiCnAJ9SJ+lsg==}
