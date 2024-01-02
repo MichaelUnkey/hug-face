@@ -1,4 +1,4 @@
-import { NextRequestWithUnkeyContext, withUnkey } from "@unkey/nextjs";
+import { withUnkey } from "@unkey/nextjs";
 import { NextResponse } from "next/server";
 
 export const POST = withUnkey(async (req) => {
