@@ -12,7 +12,7 @@ export default function Chat() {
   useEffect(() => {
     const fetchKeyData = async () => {
       if (!localStorage.getItem("keyData")) {
-        const response = await fetch("/api/unkey");
+        const response = await fetch("/api/unkeyCreate");
         const data = await response.json();
         localStorage.setItem("keyData", data.key);
         setKeyData(data.key);
