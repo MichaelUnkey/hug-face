@@ -19,11 +19,9 @@ export async function setKeyCookie(keyName: string, keyValue: string) {
     const key = cookieStore.get(keyName);
     if(!key?.value){
         cookieStore.set(keyName, keyValue, {
-            secure: true,
+            httpOnly: true,
         });
         
-        console.log("Set");
         return true;
     }
-    console.log(key?.value);
 }

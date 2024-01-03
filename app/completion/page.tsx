@@ -4,6 +4,7 @@ import { useCompletion } from "ai/react";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { getKeyCookie, setKeyCookie } from "../actions/actions";
+import { Card } from "@/components/ui/card";
 
 export default function Chat() {
   const { user } = useUser();
@@ -30,10 +31,10 @@ export default function Chat() {
   }, []);
 
   return (
-    <div className="flex flex-col w-1/2 mx-auto h-full border border-slate-400 rounded-xl ">
-      <div className="flex flex-col w-full max-w-md pt-16 mx-auto h-full ">
-        <h4 className="text-xl font-bold text-gray-900 md:text-xl pb-6">
-          Completion Example
+    <Card className="flex flex-col w-full mx-auto h-screen bg-slate-800">
+      <div className="flex flex-col w-full max-w-md mx-auto h-full ">
+        <h4 className="text-xl font-bold text-white md:text-xl pt-6 text-center">
+          Completion Page
         </h4>
         <div className="h-full w-full ">
           {data && (
@@ -60,6 +61,6 @@ export default function Chat() {
           </form>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
