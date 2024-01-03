@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
   const rootKey = process.env.UNKEY_ROOT_KEY;
   const apiId = process.env.UNKEY_API_ID;
-  const expDate = new Date(Date.now() + 1000 * 60 * 60 * 24);
   const { userId } = auth();
 
   if (!rootKey) {

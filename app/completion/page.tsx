@@ -2,13 +2,17 @@
 
 import { useCompletion } from 'ai/react';
 import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
 
 export default function Chat() {
+  const { user } = useUser();
   const [keyData, setKeyData] = useState("");
   const { completion, input, handleInputChange, handleSubmit, error, data } =
     useCompletion({headers: { Authorization: `Bearer ${keyData}` }
   });
-
+  useEffect(() => {
+    
+  }, [handleSubmit]);
   useEffect(() => {
     const fetchKeyData = async () => {
       if (!localStorage.getItem("keyData")) {
@@ -24,16 +28,18 @@ export default function Chat() {
     fetchKeyData();
   }, []);
   return (
-    <div className="flex flex-col w-1/2 mx-auto h-full bg-slate-200">
-      <div className="flex flex-col w-full max-w-md pt-16 mx-auto h-full">
+    <div className="flex flex-col w-1/2 mx-auto h-full border border-slate-400 rounded-xl ">
+      <div className="flex flex-col w-full max-w-md pt-16 mx-auto h-full ">
         <h4 className="text-xl font-bold text-gray-900 md:text-xl pb-6">
           Completion Example
         </h4>
-        <div className="h-full w-full">
+        <div className="h-full w-full ">
           {data && (
-            <pre className="p-4 text-sm bg-gray-100">
-              {JSON.stringify(data, null, 2)}
-            </pre>
+            <div>
+              <pre className="p-4 text-sm border ">
+                {JSON.stringify(data, null, 2)}
+              </pre>
+            </div>
           )}
           {error && (
             <div className="fixed top-0 left-0 w-full p-4 text-center bg-red-500 text-white">
@@ -43,8 +49,9 @@ export default function Chat() {
           {completion}
           <form onSubmit={handleSubmit}>
             <input
-              className="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl"
+              className="fixed bottom-0 w-full max-w-md p-2 mb-8 rounded-xl shadow-2xl bg-white"
               value={input}
+              name="completionInput"
               placeholder="Say something..."
               onChange={handleInputChange}
             />
