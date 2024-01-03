@@ -1,7 +1,6 @@
 "use client";
-import { UserButton } from "@clerk/nextjs";
+
 import { useChat } from "ai/react";
-import { metadata } from "./layout";
 import { useEffect, useState } from "react";
 
 export default function Chat() {
@@ -25,16 +24,15 @@ export default function Chat() {
   }, []);
 
   return (
-    <div>
-      <UserButton afterSignOutUrl="/" />
-      <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch">
+    <div className="w-1/2 mx-auto h-full bg-slate-200 ">
+      <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch h-full ">
         {messages.map((m) => (
           <div key={m.id} className="whitespace-pre-wrap">
             {m.role === "user" ? "User: " : "AI: "}
             {m.content}
           </div>
         ))}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} >
           <input
             className="fixed bottom-0 w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl"
             value={input}
