@@ -1,32 +1,34 @@
-'use client';
+"use client";
 
-import { useCompletion } from 'ai/react';
+import { useCompletion } from "ai/react";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
+import { getKeyCookie, setKeyCookie } from "../actions/actions";
 
 export default function Chat() {
   const { user } = useUser();
   const [keyData, setKeyData] = useState("");
   const { completion, input, handleInputChange, handleSubmit, error, data } =
-    useCompletion({headers: { Authorization: `Bearer ${keyData}` }
-  });
-  useEffect(() => {
-    
-  }, [handleSubmit]);
+    useCompletion({ headers: { Authorization: `Bearer ${keyData}` } });
+
   useEffect(() => {
     const fetchKeyData = async () => {
-      if (!localStorage.getItem("keyData")) {
+      const keyCookie = await getKeyCookie("_keyData");
+      if (!keyCookie) {
         const response = await fetch("/api/unkeyCreate");
         const data = await response.json();
-        localStorage.setItem("keyData", data.key);
-        setKeyData(data.key);
+        const keyCookieData = await setKeyCookie("_keyData", data.key);
+        if (keyCookieData) {
+          setKeyData(data.key);
+          console.log("cookie set");
+        }
       }
-
-      setKeyData(localStorage.getItem("keyData")!);
+      setKeyData(keyCookie?.toString()!);
       return;
     };
     fetchKeyData();
   }, []);
+
   return (
     <div className="flex flex-col w-1/2 mx-auto h-full border border-slate-400 rounded-xl ">
       <div className="flex flex-col w-full max-w-md pt-16 mx-auto h-full ">

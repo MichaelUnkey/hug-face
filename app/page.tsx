@@ -4,6 +4,7 @@ import { useChat } from "ai/react";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
+import { getKeyCookie, setKeyCookie } from "./actions/actions";
 
 export default function Chat() {
   const { user } = useUser();
@@ -11,18 +12,20 @@ export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     headers: { Authorization: `Bearer ${keyData}` },
   });
+
   useEffect(() => {
     const fetchKeyData = async () => {
-      if (!localStorage.getItem("keyData")) {
+      const keyCookie = await getKeyCookie("_keyData");
+      if (!keyCookie) {
         const response = await fetch("/api/unkeyCreate");
         const data = await response.json();
-        console.log(data);
-
-        localStorage.setItem("keyData", data.key);
-        setKeyData(data.key);
+        const keyCookieData = await setKeyCookie("_keyData", data.key);
+        if (keyCookieData) {
+          setKeyData(data.key);
+          console.log("cookie set");
+        }
       }
-
-      setKeyData(localStorage.getItem("keyData")!);
+      setKeyData(keyCookie?.toString()!);
       return;
     };
     fetchKeyData();
@@ -32,10 +35,17 @@ export default function Chat() {
     <div className="w-1/2 mx-auto h-full rounded-2xl border border-gray-200 shadow-xl bg-slate-200">
       <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch h-full ">
         {messages.map((m) => (
-          <div key={m.id} className={cn("whitespace-pre-wrap", {
-                  "bg-violet-500 font-semibold mr-12": m.role === "user",
-                  "bg-blue-600 ml-12": m.role !== "user",
-                } ,"p-4 rounded-2xl text-slate-50 mt-2")}>
+          <div
+            key={m.id}
+            className={cn(
+              "whitespace-pre-wrap",
+              {
+                "bg-violet-500 font-semibold mr-12": m.role === "user",
+                "bg-blue-600 ml-12": m.role !== "user",
+              },
+              "p-4 rounded-2xl text-slate-50 mt-2"
+            )}
+          >
             {m.role === "user" ? `${user?.username} : ` : "AI: "}
             {m.content}
           </div>
