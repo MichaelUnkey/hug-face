@@ -31,9 +31,9 @@ export default function Chat() {
   }, []);
 
   return (
-    <Card className="flex flex-col w-full mx-auto h-screen bg-slate-800">
+    <Card className="flex flex-col lg:w-1/2 mx-auto h-screen bg-gray-500 text-stone-100">
       <div className="flex flex-col w-full max-w-md mx-auto h-full ">
-        <h4 className="text-xl font-bold text-white md:text-xl pt-6 text-center">
+        <h4 className="text-xl font-bold text-white md:text-xl pt-6 text-center mb-4">
           Completion Page
         </h4>
         <div className="h-full w-full ">
@@ -52,7 +52,7 @@ export default function Chat() {
           {completion}
           <form onSubmit={handleSubmit}>
             <input
-              className="fixed bottom-0 w-full max-w-md p-2 mb-8 rounded-xl shadow-2xl bg-white"
+              className="fixed bottom-0 w-full max-w-md p-2 mb-8 rounded-xl shadow-2xl text-slate-900 bg-white"
               value={input}
               name="completionInput"
               placeholder="Say something..."
